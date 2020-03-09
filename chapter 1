@@ -1,1 +1,24 @@
+#include <iostream>
+#include <string>
+using namespace std;
 
+int main()
+{
+    string first,last;
+    cout<< "First";
+    cin>>first;
+
+    cout<<'\n'
+        <<"Hello,"
+        <<' '
+        <<first
+        <<"Last:\n";
+    cin>>last;
+
+    cout<<"Thanks"
+        <<first
+        <<"Goodbye";
+    return 0;
+
+
+}

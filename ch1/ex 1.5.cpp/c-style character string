@@ -9,7 +9,7 @@ int main ()
     char user_name[nm_size];
     cout << "Name: ";
     cin >> setw(nm_size) >> user_name;
-    
+
     switch (strlen(user_name))
     {
     case 127:
@@ -17,7 +17,7 @@ int main ()
         << "We may need to short it.\n";
     default:
         cout << "Hello, " << user_name
-        <<"happy!\n;
+        <<"happy!\n";
         break;
     }
     return 0;

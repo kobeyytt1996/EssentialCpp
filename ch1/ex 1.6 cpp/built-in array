@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+
+int main ()
+{
+    const int array_size = 2;
+    int ia[array_size];
+    int ival, icnt = 0;
+
+    while (cin >> ival && icnt < array_size)
+    {
+        ia[icnt++] = ival;
+    }
+
+    for ( int sum = 0, ix = 0; ix < icnt; ++ix)
+    {
+                sum += ia[ix];
+    }
+
+
+    cout << "Sum of" <<sum;
+}

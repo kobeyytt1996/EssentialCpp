@@ -1,0 +1,30 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+    string first_name;
+
+    cout << "First name? ";
+    cin >> first_name;
+
+    switch ( first_name.size() )
+    {
+    case 0:
+        cout << "No name.";
+        break;
+
+    case 1:
+        cout << "hello " << first_name << endl;
+        break;
+
+    default:
+        cout << "hello " << first_name << " it is qualified.\n";
+        break;
+    }
+    return 0;
+
+
+}

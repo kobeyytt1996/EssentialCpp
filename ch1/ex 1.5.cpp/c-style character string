@@ -1,0 +1,24 @@
+#include <iostream>
+#include <iomanip>
+#include <cstring>
+using namespace std;
+
+int main ()
+{
+    const int nm_size = 128;
+    char user_name[nm_size];
+    cout << "Name: ";
+    cin >> setw(nm_size) >> user_name;
+    
+    switch (strlen(user_name))
+    {
+    case 127:
+        cout << "Big name "
+        << "We may need to short it.\n";
+    default:
+        cout << "Hello, " << user_name
+        <<"happy!\n;
+        break;
+    }
+    return 0;
+}

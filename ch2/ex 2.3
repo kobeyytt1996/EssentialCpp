@@ -1,0 +1,18 @@
+extern void really_calc_elems(vector<int>&, int);
+inline bool calc_elems(vector<int> &vec, int pos)
+{
+    if ( pos <= 0 || pos > 64)
+    {
+        cerr << "Unable" << endl;
+        return false;
+    }
+    if (vec.size() < pos)
+        really_calc_elems(vec, pos);
+    return true;
+}
+
+void really_calc_elems(vector<int> &vec, int pos)
+{
+       for ( int ix = vec.size()+1; ix <= pos; ++ix)
+        vec.push_back( ix*(3*ix-1)/2 );
+}

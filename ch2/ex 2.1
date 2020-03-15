@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+
+bool fibon_elem( int, int& );
+bool print_seq( int );
+
+int main()
+{
+    bool willing = true;
+
+    while (willing)
+    {
+            int pos;
+    cout << "Position: ";
+    cin >> pos;
+
+    int elem;
+    if (fibon_elem( pos, elem ))
+        cout << "element # " << pos
+        << " is " << elem << endl;
+    else
+        cout << "Unable to calculate" << endl;
+
+    print_seq( pos );
+
+    cout << "Another try? (y/n)";
+    char ch;
+    cin >> ch;
+    if ( ch != 'y' && ch != 'Y')
+        willing = false;
+    }
+
+}

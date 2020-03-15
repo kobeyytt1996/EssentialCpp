@@ -1,0 +1,17 @@
+const char* msg_to_usr(int num_tries)
+{
+    const int rsp_cnt = 5;
+    static const char* usr_msgs[rsp_cnt]{
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+    };
+    if (num_tries < 0)
+        num_tries = 0;
+    else
+    if (num_tries >= rsp_cnt)
+        num_tries = rsp_cnt-1;
+    return usr_msgs[num_tries];
+}

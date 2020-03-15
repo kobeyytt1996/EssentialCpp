@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <fstream>
+using namespace std;
+
+int main ()
+{
+    ifstream infile("D:\\cpp\\ex 1.5\\text.txt");
+    if (! infile)
+    {cerr << "unable to open"; return -1;}
+
+    ofstream outfile("D:\\cpp\\ex 1.5\\text.sort");
+    if (! outfile)
+    {
+        cerr << "output is wrong"; return -2;
+    }
+
+    string word;
+    vector<string> whole_word;
+    while (infile >> word)
+    {
+        whole_word.push_back(word);
+    }
+
+    cout << "unsorted sentence: \n";
+
+    for (int ix = 0; ix < whole_word.size(); ++ix)
+    {
+        cout << whole_word[ix] <<' ';
+    }
+    cout << endl;
+
+    sort(whole_word.begin(), whole_word.end());
+
+    outfile << "Sorted text:\n";
+    for (int ix = 0; ix < whole_word.size(); ++ix)
+    {
+        outfile << whole_word[ix] <<' ';
+    }
+    outfile << endl;
+
+    return 0;
+}

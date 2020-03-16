@@ -1,0 +1,33 @@
+#include <map>
+#include <set>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <vector>
+#include <iterator>
+using namespace std;
+
+int main()
+{
+    ofstream even_file("even_file.txt"),
+            odd_file("odd_file.txt");
+
+    vector <int> input;
+    istream_iterator<int> in(cin), eof;
+    ostream_iterator<int> even_iter(even_file, "\n"),
+    odd_iter(odd_file, " ");
+
+    copy(in, eof, back_inserter(input));
+
+    class even_elem {
+public:
+bool operator()(int elem)
+{ return elem%2 ? false : true; }
+};
+vector<int>::iterator division =
+partition(input.begin(), input.end(), even_elem());
+
+copy(input.begin(), division, even_iter);
+copy(division, input.end(), odd_iter);
+}

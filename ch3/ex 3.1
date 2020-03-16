@@ -1,62 +1,53 @@
 #include <map>
 #include <set>
-#include <iostream>
 #include <string>
+#include <iostream>
 #include <fstream>
 using namespace std;
 
 void ini_exclusion_set(set<string>&);
-void process_file(map<string,int>&, set<string>&, ifstream&);
-void display_word_count(const map<string,int>&, ofstream&);
+void process_file(map<string,int>&, const set<string>&, ifstream&);
 void user_query(const map<string,int>&);
-
+void display_word_count(const map<string,int>&, ofstream&);
 int main()
 {
-    ifstream ifile("input.txt");
-    ofstream ofile("output.txt");
-    if ( ! ifile || ! ofile){
-        cerr << "Unable to open.\n";
-        return -1;
-    }
-
-    set<string> exclude_set;
-    ini_exclusion_set(exclude_set);
-
-
-    map<string,int> word_map;
-    process_file(word_map, exclude_set, ifile);
-    display_word_count(word_map, ofile);
-    user_query(word_map);
-
+ifstream ifile("input.txt");
+ofstream ofile("output.txt");
+if (! ifile || ! ofile){
+cerr << "Unable to open file -- bailing out!\n";
+return -1;
+}
+set<string> exclude_set;
+ini_exclusion_set(exclude_set);
+map<string,int> word_count;
+process_file(word_count, exclude_set, ifile);
+user_query(word_count);
+display_word_count(word_count, ofile);
 }
 
-void ini_exclusion_set(set<string> &exs)
+void ini_exclusion_set(set<string> &exs){
+static string _excluded_words[25] = {
+"the","and","but","that","then","are","been",
+"can","a","could","did","for", "of",
+"had","have","him","his","her","its","is",
+"were","which","when","with","would"
+};
+exs.insert(_excluded_words, _excluded_words+25);
+}
+
+void process_file(map<string,int> &word_count,
+const set<string> &exclude_set, ifstream &ifile)
 {
-    static string exclusion_set[4] = {"a", "an", "the", "and"};
-    exs.insert(exclusion_set, exclusion_set+4);
-}
-
-void process_file(map<string,int> &word_count, set<string> &exclude_set, ifstream &ifile)
+string word;
+while (ifile >> word)
 {
-    string word;
-    while (ifile >> word)
-    {
-        if (exclude_set.count(word))
-        continue;
-        word_count[word]++;
-    }
-
+if (exclude_set.count(word))
+continue;
+word_count[word]++;
 }
-void display_word_count(const map<string,int> &word_count, ofstream &os)
-{
-    map<string,int>::iterator iter = word_count.begin();
-
-    for ( ; iter < word_count.end(); ++iter)
-        os << iter->first <<"("
-        << iter->second << ")" << endl;
-    os << endl;
 }
-void user_query(const map<string,int> &word_count)
+
+void user_query(const map<string,int> &word_map)
 {
     string search_word;
 
@@ -65,10 +56,11 @@ void user_query(const map<string,int> &word_count)
 
     while (search_word != "q" && search_word.size())
     {
-        map<string,int>::iterator iter;
-        if ((iter = word_count.find(search_word)) < word_count.end())
+        map<string,int>::const_iterator it;
+        if ((it = word_map.find(search_word))
+!= word_map.end())
             cout << "Found " << search_word
-            << " occurs " << iter->second
+            << " occurs " << it->second
             <<" times\n";
         else
             cout << "Unable to find.\n";
@@ -76,3 +68,14 @@ void user_query(const map<string,int> &word_count)
         cin >> search_word;
     }
 }
+
+void display_word_count(const map<string,int> &word_map, ofstream &os)
+{
+    map<string,int>::const_iterator iter = word_map.begin();
+
+    for ( ; iter != word_map.end(); ++iter)
+        os << iter->first <<"("
+        << iter->second << ")" << endl;
+    os << endl;
+}
+

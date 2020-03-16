@@ -1,0 +1,23 @@
+#include "Stack.h"
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    Stack st;
+    string str;
+
+    while (cin >> str && !st.full())
+    {
+        st.push(str);
+    }
+
+    cout << '\n' << "Read in " << st.size() << " strings\n"
+    <<"The revers order:\n";
+
+    while (st.size())
+        if (st.pop(str))
+        cout << str << ' ';
+
+    cout << "\nThere are " << st.size() << " elements";
+}

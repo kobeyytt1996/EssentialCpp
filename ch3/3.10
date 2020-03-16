@@ -1,0 +1,30 @@
+#include <vector>
+#include <iterator>
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <fstream>
+using namespace std;
+
+int main()
+{
+    ifstream in_file("input.txt");
+    ofstream out_file("output.txt");
+
+    if (! in_file || ! out_file)
+    {
+        cerr << "Unable" << endl;
+        return -1;
+    }
+
+    istream_iterator< string > is( in_file );
+    istream_iterator< string > eof;
+    vector<string> word_seq;
+
+    copy(is, eof, back_inserter(word_seq));
+    sort(word_seq.begin(), word_seq.end());
+
+    ostream_iterator< string > os (out_file, " ");
+    copy(word_seq.begin(), word_seq.end(), os);
+}

@@ -1,0 +1,78 @@
+#include <map>
+#include <set>
+#include <iostream>
+#include <string>
+#include <fstream>
+using namespace std;
+
+void ini_exclusion_set(set<string>&);
+void process_file(map<string,int>&, set<string>&, ifstream&);
+void display_word_count(const map<string,int>&, ofstream&);
+void user_query(const map<string,int>&);
+
+int main()
+{
+    ifstream ifile("input.txt");
+    ofstream ofile("output.txt");
+    if ( ! ifile || ! ofile){
+        cerr << "Unable to open.\n";
+        return -1;
+    }
+
+    set<string> exclude_set;
+    ini_exclusion_set(exclude_set);
+
+
+    map<string,int> word_map;
+    process_file(word_map, exclude_set, ifile);
+    display_word_count(word_map, ofile);
+    user_query(word_map);
+
+}
+
+void ini_exclusion_set(set<string> &exs)
+{
+    static string exclusion_set[4] = {"a", "an", "the", "and"};
+    exs.insert(exclusion_set, exclusion_set+4);
+}
+
+void process_file(map<string,int> &word_count, set<string> &exclude_set, ifstream &ifile)
+{
+    string word;
+    while (ifile >> word)
+    {
+        if (exclude_set.count(word))
+        continue;
+        word_count[word]++;
+    }
+
+}
+void display_word_count(const map<string,int> &word_count, ofstream &os)
+{
+    map<string,int>::iterator iter = word_count.begin();
+
+    for ( ; iter < word_count.end(); ++iter)
+        os << iter->first <<"("
+        << iter->second << ")" << endl;
+    os << endl;
+}
+void user_query(const map<string,int> &word_count)
+{
+    string search_word;
+
+    cout << "Enter a word: q to quit\n";
+    cin >> search_word;
+
+    while (search_word != "q" && search_word.size())
+    {
+        map<string,int>::iterator iter;
+        if ((iter = word_count.find(search_word)) < word_count.end())
+            cout << "Found " << search_word
+            << " occurs " << iter->second
+            <<" times\n";
+        else
+            cout << "Unable to find.\n";
+        cout << "Again: q to quit\n";
+        cin >> search_word;
+    }
+}

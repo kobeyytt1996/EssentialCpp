@@ -1,0 +1,17 @@
+#include <string>
+using std::string;
+
+class globalWrapper{
+public:
+    static string version_stamp(){ return _version_stamp; }
+    static int tests_run(){ return _tests_run; }
+    
+    static void version_stamp( const string& nstamp ){ _version_stamp = nstamp; }
+    static void tests_run( int nval ){_tests_run = nval;}
+private:
+    static string _version_stamp;
+    static int _tests_run;
+};
+
+string globalWrapper::_version_stamp;
+int globalWrapper::_tests_run;
